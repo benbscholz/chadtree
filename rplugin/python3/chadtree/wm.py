@@ -46,9 +46,10 @@ def find_windows_in_tab(nvim: Nvim, exclude: bool) -> Iterator[Window]:
 
 def find_fm_windows(nvim: Nvim) -> Iterator[Tuple[Window, Buffer]]:
     for window in nvim.api.list_wins():
-        buffer: Buffer = nvim.api.win_get_buf(window)
-        if is_fm_buffer(nvim, buffer=buffer):
-            yield window, buffer
+        if window.valid:
+            buffer: Buffer = nvim.api.win_get_buf(window)
+            if is_fm_buffer(nvim, buffer=buffer):
+                yield window, buffer
 
 
 def find_fm_windows_in_tab(nvim: Nvim) -> Iterator[Window]:
